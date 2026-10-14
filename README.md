@@ -20,14 +20,10 @@ the top as `--gb-*` variables, then mapped onto Zotero's own design tokens.
 
 1. Edit `src/style.css`.
 2. Bump `"version"` in `src/manifest.json` (e.g. `1.0.0` → `1.0.1`).
-3. Commit, then tag and push:
-   ```bash
-   git tag v1.0.1
-   git push && git push --tags
-   ```
+3. Commit and push to `main` (or just edit both files on github.com).
 
-GitHub Actions builds the `.xpi`, generates `update.json`, and publishes the
-release. Every Zotero with the plugin installed picks it up on its next update check
+GitHub Actions sees the new version, builds the `.xpi`, generates `update.json`,
+and publishes the release. Pushes that don't change the version are skipped. Every Zotero with the plugin installed picks it up on its next update check
 (or immediately via **Tools → Plugins → ⚙ → Check for Updates**).
 
 To build locally instead: `python3 build.py` → output in `dist/`.

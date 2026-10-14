@@ -1,8 +1,12 @@
 name: Release
 
+# Publishes a release whenever src/manifest.json has a version that
+# hasn't been released yet. Workflow: edit -> bump version -> push.
 on:
   push:
-    tags: ["v*"]
+    branches: [main]
+    paths: ["src/**", "build.py", ".github/workflows/release.yml"]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -13,20 +17,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check tag matches manifest version
+      - name: Read version
+        id: version
         run: |
-          MANIFEST_VERSION=$(python3 -c "import json; print(json.load(open('src/manifest.json'))['version'])")
-          if [ "v$MANIFEST_VERSION" != "$GITHUB_REF_NAME" ]; then
-            echo "Tag $GITHUB_REF_NAME doesn't match manifest version $MANIFEST_VERSION"
-            exit 1
-          fi
+          V=$(python3 -c "import json; print(json.load(open('src/manifest.json'))['version'])")
+          echo "tag=v$V" >> "$GITHUB_OUTPUT"
 
-      - name: Build
-        run: python3 build.py
-
-      - name: Publish release
+      - name: Skip if already released
+        id: check
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" dist/gruvbox-soft.xpi dist/update.json \
-            --title "$GITHUB_REF_NAME" --generate-notes
+          if gh release view "${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
+            echo "Release ${{ steps.version.outputs.tag }} exists; bump the version in src/manifest.json to publish."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build
+        if: steps.check.outputs.skip != 'true'
+        run: python3 build.py
+
+      - name: Publish release
+        if: steps.check.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            dist/gruvbox-soft.xpi dist/update.json \
+            --target "$GITHUB_SHA" \
+            --title "${{ steps.version.outputs.tag }}" \
+            --generate-notes
