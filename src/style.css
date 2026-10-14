@@ -1,0 +1,107 @@
+/* =========================================================
+   Gruvbox Soft — a subtle Gruvbox-dark theme for Zotero 7+
+   Applies only when Zotero's Appearance is set to Dark,
+   so Light mode stays stock.
+   ========================================================= */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* ---- Gruvbox palette (dark, muted accents) ---- */
+    --gb-bg0-h: #1d2021;
+    --gb-bg0:   #282828;
+    --gb-bg0-s: #32302f;
+    --gb-bg1:   #3c3836;
+    --gb-bg2:   #504945;
+    --gb-bg3:   #665c54;
+    --gb-fg:    #ebdbb2;
+    --gb-fg2:   #d5c4a1;
+    --gb-fg3:   #bdae93;
+    --gb-fg4:   #a89984;
+    --gb-gray:  #928374;
+    --gb-blue:  #83a598;
+    --gb-aqua:  #8ec07c;
+    --gb-yellow:#d79921;
+    --gb-orange:#d65d0e;
+    --gb-red:   #cc241d;
+
+    /* ---- Surfaces (Zotero 7 design tokens) ---- */
+    --material-background: var(--gb-bg0);
+    --material-sidepane:   var(--gb-bg0-s);
+    --material-toolbar:    var(--gb-bg0-h);
+    --material-tabstrip:   var(--gb-bg0-h);
+    --material-button:     var(--gb-bg1);
+    --material-control:    var(--gb-bg1);
+    --material-menu:       var(--gb-bg0-s);
+    --material-panedivider: var(--gb-bg1);
+    --material-border:            rgba(235, 219, 178, 0.10);
+    --material-border-transparent: rgba(235, 219, 178, 0.10);
+    --material-border-quarternary: rgba(235, 219, 178, 0.08);
+    --material-border-quinary:     rgba(235, 219, 178, 0.06);
+
+    /* ---- Text / fills ---- */
+    --fill-primary:    var(--gb-fg);
+    --fill-secondary:  rgba(235, 219, 178, 0.70);
+    --fill-tertiary:   rgba(235, 219, 178, 0.45);
+    --fill-quarternary: rgba(235, 219, 178, 0.18);
+    --fill-quinary:    rgba(235, 219, 178, 0.07);
+    --fill-senary:     rgba(235, 219, 178, 0.04);
+
+    /* ---- Accent: soft gruvbox blue instead of system blue ---- */
+    --color-accent:   var(--gb-blue);
+    --accent-blue:    var(--gb-blue);
+    --accent-blue10:  rgba(131, 165, 152, 0.10);
+    --accent-blue30:  rgba(131, 165, 152, 0.30);
+    --accent-blue50:  rgba(131, 165, 152, 0.50);
+    --accent-green:   var(--gb-aqua);
+    --accent-yellow:  var(--gb-yellow);
+    --accent-orange:  var(--gb-orange);
+    --accent-red:     var(--gb-red);
+  }
+
+  /* ---- Fallbacks in case a pane ignores the tokens ---- */
+  #zotero-collections-tree,
+  #zotero-items-tree,
+  #zotero-item-pane,
+  #zotero-context-pane {
+    background-color: var(--gb-bg0) !important;
+    color: var(--gb-fg) !important;
+  }
+  #zotero-collections-pane,
+  #zotero-collections-tree {
+    background-color: var(--gb-bg0-s) !important;
+  }
+
+  /* Subtle zebra rows */
+  #zotero-items-tree .row.odd:not(.selected) {
+    background-color: rgba(235, 219, 178, 0.025) !important;
+  }
+
+  /* Selected rows: muted warm highlight rather than bright blue */
+  .virtualized-table .row.selected,
+  .virtualized-table:focus-within .row.selected {
+    background-color: var(--gb-bg2) !important;
+    color: var(--gb-fg) !important;
+  }
+  .virtualized-table:focus-within .row.selected {
+    box-shadow: inset 2px 0 0 var(--gb-yellow);
+  }
+
+  /* Column headers */
+  .virtualized-table-header {
+    background-color: var(--gb-bg0-h) !important;
+    color: var(--gb-fg4) !important;
+  }
+
+  /* Secondary text (dates, counts, labels) */
+  .meta-label,
+  .label,
+  .item-count {
+    color: var(--gb-fg4) !important;
+  }
+
+  /* Text selection */
+  ::selection {
+    background-color: rgba(215, 153, 33, 0.35);
+    color: var(--gb-fg);
+  }
+}

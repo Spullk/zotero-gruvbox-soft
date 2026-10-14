@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+  "name": "Gruvbox Soft",
+  "version": "1.0.0",
+  "description": "A subtle Gruvbox-dark theme for Zotero (applies when Appearance is set to Dark).",
+  "author": "Lucas",
+  "homepage_url": "https://github.com/Spullk/zotero-gruvbox-soft",
+  "applications": {
+    "zotero": {
+      "id": "gruvbox-soft@spullk.github.io",
+      "update_url": "https://github.com/Spullk/zotero-gruvbox-soft/releases/latest/download/update.json",
+      "strict_min_version": "6.999",
+      "strict_max_version": "9.*"
+    }
+  }
+}
